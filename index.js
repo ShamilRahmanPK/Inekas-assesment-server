@@ -14,7 +14,7 @@ app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
-app.use("/api/order", orderRoutes);
+app.use("/api/orders", orderRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
