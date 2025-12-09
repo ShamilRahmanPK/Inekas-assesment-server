@@ -1,33 +1,37 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
-// Item Schema (each uploaded image entry)
+// Each uploaded image's metadata
 const ItemSchema = new mongoose.Schema({
+  filename: { type: String },
+  originalname: { type: String },
   size: { type: String },
-  quantity: { type: Number }
+  quantity: { type: Number },
+  paperType: { type: String },
 });
 
-// Address Schema
+// Delivery Address
 const AddressSchema = new mongoose.Schema({
   name: { type: String, default: "" },
   phone: { type: String, default: "" },
   street: { type: String, default: "" },
   city: { type: String, default: "" },
-  emirate: { type: String, default: "" }
+  emirate: { type: String, default: "" },
+  lat: { type: Number },
+  lng: { type: Number },
+  locationURL: { type: String },
 });
 
-// Main Order Schema
+// Main Order schema
 const OrderSchema = new mongoose.Schema(
   {
-    paperType: { type: String },
     totalAmount: { type: Number },
-    paymentMethod: { type: String, default: "Demo Payment" },
-
+    discountPercent: { type: Number, default: 0 },
+    promoCode: { type: String, default: "" },
+    paymentId: { type: String, default: "DEMO_PAYMENT_ID" },
+    items: { type: [ItemSchema], default: [] },
     deliveryAddress: { type: AddressSchema, default: {} },
-
-    items: { type: [ItemSchema], default: [] }
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Order", OrderSchema);
-
+module.exports = mongoose.model("Order", OrderSchema);
